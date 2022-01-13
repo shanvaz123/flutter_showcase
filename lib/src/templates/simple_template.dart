@@ -12,16 +12,16 @@ import 'package:url_launcher/url_launcher.dart';
 class SimpleTemplate extends Template {
   final bool reverse;
 
-  SimpleTemplate({this.reverse});
+  SimpleTemplate({required this.reverse});
 
   @override
-  Widget builder({BuildContext context, TemplateData data, Widget app}) {
-    final shouldDisplayTemplate = MediaQuery.of(context).size.width > 600;
+  Widget builder({BuildContext? context, TemplateData? data, Widget? app}) {
+    final shouldDisplayTemplate = MediaQuery.of(context!).size.width > 600;
     Widget content =
-        isScreenshot ? _ScreenshotContent(data: data) : _Content(data: data);
+        isScreenshot ? _ScreenshotContent(data: data!) : _Content(data: data!);
     if (!shouldDisplayTemplate) {
       return AppWithDrawer(
-        child: app,
+        child: app!,
         drawer: content,
         theme: data.theme,
       );
@@ -39,7 +39,7 @@ class SimpleTemplate extends Template {
           : [
               Expanded(flex: 2, child: sizedChild),
               SizedBox(width: 80),
-              Flexible(flex: 1, key: Key('Preview'), child: app),
+              Flexible(flex: 1, key: Key('Preview'), child: app!),
             ];
       return Scaffold(
         backgroundColor: data.theme.backgroundColor,
@@ -67,7 +67,7 @@ class SimpleTemplate extends Template {
 class _Content extends StatelessWidget {
   final TemplateData data;
 
-  const _Content({Key key, this.data}) : super(key: key);
+  const _Content({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -115,10 +115,8 @@ class _Content extends StatelessWidget {
           children: <Widget>[
             InkWell(
               onTap: () => launch('https://flutter.dev'),
-              child: Image(
-                  image: (theme.flutterLogoColor ?? FlutterLogoColor.original)
-                      .image(),
-                  height: 40),
+              child:
+                  Image(image: (theme.flutterLogoColor).image()!, height: 40),
             ),
             if (data.logoLink != null)
               Flexible(
@@ -140,7 +138,7 @@ class _Content extends StatelessWidget {
 class _ScreenshotContent extends StatelessWidget {
   final TemplateData data;
 
-  const _ScreenshotContent({Key key, this.data}) : super(key: key);
+  const _ScreenshotContent({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -173,10 +171,8 @@ class _ScreenshotContent extends StatelessWidget {
           children: <Widget>[
             InkWell(
               onTap: () => launch('https://flutter.dev'),
-              child: Image(
-                  image: (theme.flutterLogoColor ?? FlutterLogoColor.original)
-                      .image(),
-                  height: 80),
+              child:
+                  Image(image: (theme.flutterLogoColor).image()!, height: 80),
             ),
           ],
         ),
@@ -190,7 +186,8 @@ class _Link extends StatelessWidget {
   final LinkData data;
   final TemplateThemeData theme;
 
-  const _Link({Key key, this.data, this.theme}) : super(key: key);
+  const _Link({Key? key, required this.data, required this.theme})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -228,7 +225,7 @@ class _Link extends StatelessWidget {
 class _LogoLink extends StatelessWidget {
   final LinkData data;
 
-  const _LogoLink({Key key, this.data}) : super(key: key);
+  const _LogoLink({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -244,7 +241,11 @@ class AppWithDrawer extends StatefulWidget {
   final Widget drawer;
   final TemplateThemeData theme;
 
-  const AppWithDrawer({Key key, this.child, this.drawer, this.theme})
+  const AppWithDrawer(
+      {Key? key,
+      required this.child,
+      required this.drawer,
+      required this.theme})
       : super(key: key);
 
   @override
@@ -255,7 +256,7 @@ class _AppWithDrawerState extends State<AppWithDrawer>
     with TickerProviderStateMixin {
   bool showInfoButton = true;
 
-  AnimationController animationController;
+  late AnimationController animationController;
 
   @override
   void initState() {
@@ -297,10 +298,11 @@ class _AppWithDrawerState extends State<AppWithDrawer>
                   child: Container(
                     decoration: BoxDecoration(
                         border: Border(
-                            left: BorderSide(color: theme.titleTextStyle.color),
-                            top: BorderSide(color: theme.titleTextStyle.color),
+                            left:
+                                BorderSide(color: theme.titleTextStyle.color!),
+                            top: BorderSide(color: theme.titleTextStyle.color!),
                             bottom:
-                                BorderSide(color: theme.titleTextStyle.color)),
+                                BorderSide(color: theme.titleTextStyle.color!)),
                         color: theme.backgroundColor,
                         boxShadow: []),
                     padding: EdgeInsets.all(20),

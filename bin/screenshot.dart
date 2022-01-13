@@ -15,13 +15,14 @@ Future takeScreenshot({String browser = 'chrome'}) async {
     File('showcase/src/app_test.dart')..writeAsStringSync(_appTestFile)
   ];
 
-  WebDriver driver;
+  WebDriver driver = ChromeDriver();
+  ;
   if (browser == 'chrome')
     driver = ChromeDriver();
   else if (browser == 'safari')
     driver = SafariDriver();
   else
-    throwToolExit('$browser is not supported');
+    throwToolExit('$browser is not supported', exitCode: 0);
 
   print('before start');
   await driver.start();

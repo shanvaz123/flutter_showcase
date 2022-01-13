@@ -8,8 +8,8 @@ class FrameBuilder extends StatelessWidget {
   final Widget app;
   final TransitionBuilder builder;
   const FrameBuilder({
-    this.app,
-    this.builder,
+    required this.app,
+    required this.builder,
   });
 
   @override
@@ -23,16 +23,16 @@ class FrameBuilder extends StatelessWidget {
 class Frame extends StatelessWidget {
   final Widget app;
 
-  const Frame({Key key, this.app}) : super(key: key);
+  const Frame({Key? key, required this.app}) : super(key: key);
 
-  static TransitionBuilder get builder => (context, app) => Frame(app: app);
+  static TransitionBuilder get builder => (context, app) => Frame(app: app!);
 
   @override
   Widget build(BuildContext context) {
     if (!isShowcaseActive) {
       return app;
     }
-    final theme = DefaultFrameTheme.of(context).data;
+    final theme = DefaultFrameTheme.of(context)?.data;
     final shouldDisplayTemplate = MediaQuery.of(context).size.width > 600;
     if (!shouldDisplayTemplate) {
       return app;
@@ -62,7 +62,7 @@ class Frame extends StatelessWidget {
                         left: 0,
                         right: 0,
                         height: 44,
-                        child: _StatusBar(theme: theme),
+                        child: _StatusBar(theme: theme!),
                       ),
                       Align(
                         alignment: Alignment.bottomCenter,
@@ -98,7 +98,7 @@ class Frame extends StatelessWidget {
 class _StatusBar extends StatelessWidget {
   final FrameThemeData theme;
 
-  const _StatusBar({Key key, this.theme}) : super(key: key);
+  const _StatusBar({Key? key, required this.theme}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

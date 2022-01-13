@@ -69,7 +69,7 @@ void addShowcasePackageIfMissing({String path = ''}) {
   final pubspec = File(pubspecName);
   final lines = pubspec.readAsLinesSync();
 
-  int dependencyLine;
+  int dependencyLine = 0;
 
   final trackLibraries = {
     '  flutter_test:': false,
@@ -159,11 +159,11 @@ class ProjectGenerator {
         final newContent = formatter.format(unit.toSource());
         File(filePath).writeAsStringSync(newContent);
       } on FormatterException catch (ex) {
-        throwToolExit('Error while formatting new file\n${ex}');
+        throwToolExit('Error while formatting new file\n${ex}', exitCode: 0);
       }
       print('Adding showcase to project succesfully');
     } else {
-      throwToolExit('There is no MaterialApp in lib/main.dart');
+      throwToolExit('There is no MaterialApp in lib/main.dart', exitCode: 0);
     }
   }
 
@@ -188,9 +188,10 @@ class ProjectGenerator {
     if (!unit.toSource().contains(packageImport)) {
       final Directive node = unit.directives.last;
 
-      final Directive clone = AstCloner().cloneNode(node);
+      //final Directive clone =  AstCloner().cloneNode(node);
 
-      int offset = clone.offset;
+      //int offset = clone.offset;
+      int offset = node.offset;
       StringToken importToken = StringToken(TokenType.STRING, 'import', offset);
       StringToken semiColonToken =
           StringToken(TokenType.STRING, ';', offset + packageImport.length - 1);
@@ -237,7 +238,7 @@ class AddShowcaseVisitor extends RecursiveAstVisitor {
 
             final ssl = astFactory.simpleStringLiteral(st, newString);
             final NodeReplacer replacer = NodeReplacer(builderNode, ssl);
-            builderNode.parent.accept(replacer);
+            builderNode.parent?.accept(replacer);
           }
         } else {
           // Add frame builder
@@ -249,7 +250,7 @@ class AddShowcaseVisitor extends RecursiveAstVisitor {
           StringToken st = StringToken(TokenType.STRING, newString, offset);
           final ssl = astFactory.simpleStringLiteral(st, newString);
           final NodeReplacer replacer = NodeReplacer(builderNode, ssl);
-          builderNode.parent.accept(replacer);
+          builderNode.parent?.accept(replacer);
         }
       }
     }
@@ -260,7 +261,7 @@ class AddShowcaseVisitor extends RecursiveAstVisitor {
 
       SimpleStringLiteral ssl = _createSimpleStringLiteral(widget);
       final NodeReplacer replacer = NodeReplacer(widget, ssl);
-      widget.parent.accept(replacer);
+      widget.parent?.accept(replacer);
     }
   }
 

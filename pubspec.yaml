@@ -1,32 +1,29 @@
 name: flutter_showcase
 description: A simple, fast and easy way to share you flutter project or mockups with the world.
-version: 0.0.7
+version: 0.0.7-1
 homepage: https://github.com/jamesblasco/flutter_showcase
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  url_launcher: ^5.4.2
-  font_awesome_flutter: ^8.8.1
-  fluid_layout: ^0.1.0
-  equatable: ^1.1.1
-  dart_style: ^1.3.4
-  analyzer: ^0.39.6
-  _fe_analyzer_shared: ^2.1.0
-  args: ^1.6.0
-  yaml: ^2.2.0
+  url_launcher: 
+  font_awesome_flutter: 
+  fluid_layout: 
+  equatable: 
+  dart_style: 
+  analyzer:
+  _fe_analyzer_shared: 
+  args: 
+  yaml: 
 
 dev_dependencies:
   test: any
   flutter_test:
     sdk: flutter
-  flutter_tools:
-    sdk: flutter
-  flutter_driver:
-    sdk: flutter
+
 
 
 

@@ -39,23 +39,23 @@ class TemplateThemeData {
   final IconThemeData buttonIconTheme;
 
   factory TemplateThemeData({
-    Brightness brightness,
-    FlutterLogoColor flutterLogoColor,
-    TextStyle titleTextStyle,
-    TextStyle descriptionTextStyle,
-    Color backgroundColor,
-    ButtonThemeData buttonTheme,
-    FrameThemeData frameTheme,
-    TextStyle buttonTextStyle,
-    IconThemeData buttonIconTheme,
+    required Brightness brightness,
+    required FlutterLogoColor flutterLogoColor,
+    required TextStyle titleTextStyle,
+    required TextStyle descriptionTextStyle,
+    required Color backgroundColor,
+    required ButtonThemeData buttonTheme,
+    required FrameThemeData frameTheme,
+    required TextStyle buttonTextStyle,
+    required IconThemeData buttonIconTheme,
   }) {
-    brightness ??= Brightness.light;
+    // brightness ??= Brightness.light;
     final bool isDark = brightness == Brightness.dark;
-    backgroundColor ??= isDark ? Colors.grey[850] : Colors.grey[50];
+    backgroundColor = (isDark ? Colors.grey[850] : Colors.grey[50])!;
     final textColor = isDark ? Colors.white : Colors.black;
     descriptionTextStyle =
         TextStyle(color: textColor, height: 1.8, fontSize: 18).merge(
-      descriptionTextStyle ?? TextStyle(),
+      descriptionTextStyle,
     );
     titleTextStyle = TextStyle(
             fontSize: 60.0,
@@ -63,19 +63,19 @@ class TemplateThemeData {
             fontWeight: FontWeight.w400,
             textBaseline: TextBaseline.alphabetic,
             letterSpacing: -0.5)
-        .merge(titleTextStyle ?? TextStyle());
-    buttonTheme ??= ButtonThemeData(
+        .merge(titleTextStyle /*?? TextStyle()*/);
+    /*buttonTheme ??= ButtonThemeData(
       padding: EdgeInsets.all(12),
       buttonColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
         side: BorderSide(color: Colors.grey),
       ),
-    );
-    buttonIconTheme ??= IconThemeData();
+    );*/
+    /*buttonIconTheme ??= IconThemeData();
     buttonTextStyle ??= TextStyle();
     flutterLogoColor ??= FlutterLogoColor.original;
-    frameTheme ??= FrameThemeData();
+    frameTheme ??= FrameThemeData();*/
 
     return TemplateThemeData.raw(
         brightness: brightness,
@@ -90,24 +90,16 @@ class TemplateThemeData {
   }
 
   TemplateThemeData.raw({
-    this.flutterLogoColor,
-    this.titleTextStyle,
-    this.descriptionTextStyle,
-    this.backgroundColor,
-    this.buttonTheme,
-    this.brightness,
-    this.frameTheme,
-    this.buttonTextStyle,
-    this.buttonIconTheme,
-  })  : assert(flutterLogoColor != null),
-        assert(titleTextStyle != null),
-        assert(descriptionTextStyle != null),
-        assert(backgroundColor != null),
-        assert(buttonTheme != null),
-        assert(brightness != null),
-        assert(buttonTextStyle != null),
-        assert(buttonIconTheme != null),
-        assert(frameTheme != null);
+    required this.flutterLogoColor,
+    required this.titleTextStyle,
+    required this.descriptionTextStyle,
+    required this.backgroundColor,
+    required this.buttonTheme,
+    required this.brightness,
+    required this.frameTheme,
+    required this.buttonTextStyle,
+    required this.buttonIconTheme,
+  });
 
   static TemplateThemeData light() {
     return TemplateThemeData(
@@ -130,30 +122,36 @@ class TemplateThemeData {
           side: BorderSide(color: Colors.grey),
         ),
       ),
+      buttonIconTheme: IconThemeData(),
+      buttonTextStyle: TextStyle(),
+      frameTheme: FrameThemeData(),
     );
   }
 
   static TemplateThemeData dark() {
     return TemplateThemeData(
-      brightness: Brightness.dark,
-      titleTextStyle: TextStyle(
-          fontSize: 60.0,
-          color: Colors.white,
-          fontWeight: FontWeight.w400,
-          textBaseline: TextBaseline.alphabetic,
-          letterSpacing: -0.5),
-      descriptionTextStyle: TextStyle(color: Colors.white),
-      flutterLogoColor: FlutterLogoColor.white,
-      buttonTheme: ButtonThemeData(
-        padding: EdgeInsets.all(12),
-        buttonColor: Colors.grey[900],
-        hoverColor: Colors.grey[700],
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: Colors.grey),
+        brightness: Brightness.dark,
+        titleTextStyle: TextStyle(
+            fontSize: 60.0,
+            color: Colors.white,
+            fontWeight: FontWeight.w400,
+            textBaseline: TextBaseline.alphabetic,
+            letterSpacing: -0.5),
+        descriptionTextStyle: TextStyle(color: Colors.white),
+        flutterLogoColor: FlutterLogoColor.white,
+        buttonTheme: ButtonThemeData(
+          padding: EdgeInsets.all(12),
+          buttonColor: Colors.grey[900],
+          hoverColor: Colors.grey[700],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+            side: BorderSide(color: Colors.grey),
+          ),
         ),
-      ),
-    );
+        buttonIconTheme: IconThemeData(),
+        buttonTextStyle: TextStyle(),
+        frameTheme: FrameThemeData(),
+        backgroundColor: Color(0xFFFF9000));
   }
 
   static TemplateThemeData black() {
@@ -179,6 +177,8 @@ class TemplateThemeData {
           side: BorderSide(color: Colors.grey),
         ),
       ),
+      buttonIconTheme: IconThemeData(),
+      buttonTextStyle: TextStyle(),
     );
   }
 }
@@ -190,7 +190,7 @@ enum FlutterLogoColor {
 }
 
 extension FlutterLogoColorImage on FlutterLogoColor {
-  ImageProvider image() {
+  ImageProvider? image() {
     switch (this) {
       case FlutterLogoColor.original:
         return AssetImage(

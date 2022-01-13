@@ -26,14 +26,14 @@ class Showcase extends StatelessWidget {
   final Template template;
 
   const Showcase({
-    Key key,
-    this.app,
-    this.title,
-    this.theme,
-    this.description,
-    this.links,
-    this.template,
-    this.logoLink,
+    Key? key,
+    required this.app,
+    required this.title,
+    required this.theme,
+    required this.description,
+    required this.links,
+    required this.template,
+    required this.logoLink,
   }) : super(key: key);
 
   @override
@@ -41,8 +41,8 @@ class Showcase extends StatelessWidget {
     if (!isShowcaseActive) {
       return app;
     }
-    final _template = template ?? Templates.simple;
-    final _theme = theme ?? TemplateThemeData.light();
+    final _template = template;
+    final _theme = theme;
     return Material(
       child: Directionality(
         textDirection: TextDirection.ltr,
@@ -72,7 +72,8 @@ class CustomShowcase extends StatelessWidget {
   final Widget app;
   final AppBuilder builder;
 
-  const CustomShowcase({Key key, this.app, this.builder}) : super(key: key);
+  const CustomShowcase({Key? key, required this.app, required this.builder})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +94,8 @@ class CustomShowcase extends StatelessWidget {
 /// It is performed in a standalone widget to rebuild **only** [MediaQuery] and
 /// its dependents when `window` changes, instead of rebuilding the entire widget tree.
 class _MediaQueryFromWindow extends StatefulWidget {
-  const _MediaQueryFromWindow({Key key, this.child}) : super(key: key);
+  const _MediaQueryFromWindow({Key? key, required this.child})
+      : super(key: key);
 
   final Widget child;
 
@@ -106,7 +108,7 @@ class _MediaQueryFromWindowsState extends State<_MediaQueryFromWindow>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance?.addObserver(this);
   }
 
   // ACCESSIBILITY
@@ -151,14 +153,14 @@ class _MediaQueryFromWindowsState extends State<_MediaQueryFromWindow>
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-      data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
+      data: MediaQueryData.fromWindow(WidgetsBinding.instance!.window),
       child: widget.child,
     );
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 }

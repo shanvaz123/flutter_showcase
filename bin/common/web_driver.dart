@@ -1,7 +1,7 @@
 import 'dart:io';
 
 abstract class WebDriver {
-  Process process;
+  late Process process;
 
   List<String> get arguments => [];
 
@@ -18,7 +18,7 @@ abstract class WebDriver {
   void close() {
     assert(process != null, 'driver is already closed');
     process.kill(ProcessSignal.sigusr1);
-    process = null;
+    //process = null;
   }
 }
 

@@ -6,7 +6,7 @@ class SocialMetadata {
   final String description;
   final String url;
 
-  SocialMetadata({this.title, this.description, this.url});
+  SocialMetadata({this.title = '', this.description = '', this.url = ''});
 
   @override
   String toString() => 'SocialMetadata:\n $title,\n $description, \n$url';
@@ -20,7 +20,7 @@ SocialMetadata generateMetadata() {
 
     String title;
     String description;
-    String url;
+    String url = '';
 
     if (doc is YamlMap) {
       final showcaseNode = doc['showcase'];
@@ -32,9 +32,9 @@ SocialMetadata generateMetadata() {
     } else {
       print('no map $doc');
     }
-
-    title ??= doc['name'];
-    description ??= doc['description'];
+    title = description = '';
+    title = doc['name'];
+    description = doc['description'];
 
     return SocialMetadata(title: title, description: description, url: url);
   } catch (e) {
